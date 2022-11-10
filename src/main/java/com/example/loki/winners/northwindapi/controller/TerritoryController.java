@@ -8,15 +8,12 @@ import com.example.loki.winners.northwindapi.repository.TerritoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.loki.winners.northwindapi.entity.Territory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -47,7 +44,7 @@ public class TerritoryController {
                 if (employeeterritory.getTerritoryID().equals(territory)) {
                     Employee employee = employeeterritory.getEmployeeID();
                     Link link = linkTo(methodOn(EmployeeController.class)
-                            .getCustomerById(employee.getId()))
+                            .getEmployeeById(employee.getId()))
                             .withRel(employee.getFirstName() + " " + employee.getLastName());
                     territoryModel.add(link);
                 }
