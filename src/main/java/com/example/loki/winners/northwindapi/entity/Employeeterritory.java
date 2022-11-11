@@ -9,12 +9,12 @@ public class Employeeterritory {
     private EmployeeterritoryId id;
 
     @MapsId("employeeID")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "EmployeeID", nullable = false)
     private Employee employeeID;
 
     @MapsId("territoryID")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "TerritoryID", nullable = false)
     private Territory territoryID;
 

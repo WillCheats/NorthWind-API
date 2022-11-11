@@ -1,7 +1,7 @@
 package com.example.loki.winners.northwindapi.controller;
 
 import com.example.loki.winners.northwindapi.entity.Product;
-import com.example.loki.winners.northwindapi.exception.CustomerNotFoundException;
+import com.example.loki.winners.northwindapi.exception.EntityNotFoundException;
 import com.example.loki.winners.northwindapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -9,11 +9,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilderDsl;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,7 +32,7 @@ public class ProductController {
         products.forEach(product -> {
             product.add(WebMvcLinkBuilder.linkTo(controller.getProductById(product.getId())).withSelfRel());
             if (includeCategory) { product.add(WebMvcLinkBuilder.linkTo(CategoryController.controller.getCategoryById(product.getCategoryID().getId())).withRel(LinkRelation.of("category")));}
-            if (includeSupplier) { product.add(WebMvcLinkBuilder.linkTo(SupplierController.controller.getCategoryById(product.getSupplierID().getId())).withRel(LinkRelation.of("supplier")));}
+            if (includeSupplier) { product.add(WebMvcLinkBuilder.linkTo(SupplierController.controller.getSupplierById(product.getSupplierID().getId())).withRel(LinkRelation.of("supplier")));}
         });
 
 
@@ -46,8 +42,9 @@ public class ProductController {
 
     @GetMapping("product/{id}")
     public Product getProductById(@PathVariable Integer id){
-        return productRepo.findById(id).orElseThrow(() -> new CustomerNotFoundException(404, "Could not find product with id " + id + "."));
+        return productRepo.findById(id).orElseThrow(() -> new EntityNotFoundException(404, "Could not find product with id " + id + "."));
     }
+
 
     @PatchMapping("product")
     public void updateProduct(int id, BigDecimal unitPrice){
