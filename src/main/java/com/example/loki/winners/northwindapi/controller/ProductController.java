@@ -30,16 +30,17 @@ public class ProductController {
     }
 
     @GetMapping("product/all")
-    public CollectionModel<Product> getAllProducts() {
+    public CollectionModel<Product> getAllProducts(@Param("includeCategory") boolean includeCategory, @Param("includeSupplier") boolean includeSupplier) {
         List<Product> products = productRepo.findAll();
 
         products.forEach(product -> {
             product.add(WebMvcLinkBuilder.linkTo(controller.getProductById(product.getId())).withSelfRel());
-            product.add(WebMvcLinkBuilder.linkTo(CategoryController.controller.getCategoryById(product.getCategoryID().getId())).withRel(LinkRelation.of("category")));
-            product.add(WebMvcLinkBuilder.linkTo(SupplierController.controller.getCategoryById(product.getSupplierID().getId())).withRel(LinkRelation.of("supplier")));
+            if (includeCategory) { product.add(WebMvcLinkBuilder.linkTo(CategoryController.controller.getCategoryById(product.getCategoryID().getId())).withRel(LinkRelation.of("category")));}
+            if (includeSupplier) { product.add(WebMvcLinkBuilder.linkTo(SupplierController.controller.getCategoryById(product.getSupplierID().getId())).withRel(LinkRelation.of("supplier")));}
         });
 
-        Link allDirectorsLink = WebMvcLinkBuilder.linkTo(controller.getAllProducts()).withSelfRel();
+
+        Link allDirectorsLink = WebMvcLinkBuilder.linkTo(controller.getAllProducts(includeCategory, includeSupplier)).withSelfRel();
         return CollectionModel.of(products, allDirectorsLink).withFallbackType(Product.class);
     }
 
