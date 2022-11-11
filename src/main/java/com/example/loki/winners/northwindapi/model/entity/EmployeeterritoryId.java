@@ -1,4 +1,4 @@
-package com.example.loki.winners.northwindapi.entity;
+package com.example.loki.winners.northwindapi.model.entity;
 
 import org.hibernate.Hibernate;
 

@@ -1,17 +1,13 @@
 package com.example.loki.winners.northwindapi.controller;
 
-import com.example.loki.winners.northwindapi.entity.Order;
-import com.example.loki.winners.northwindapi.repository.CustomerRepository;
-import com.example.loki.winners.northwindapi.repository.OrderRepository;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.loki.winners.northwindapi.model.entity.Order;
+import com.example.loki.winners.northwindapi.model.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
 

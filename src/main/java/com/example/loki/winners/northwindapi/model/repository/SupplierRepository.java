@@ -1,7 +1,6 @@
-package com.example.loki.winners.northwindapi.repository;
+package com.example.loki.winners.northwindapi.model.repository;
 
-import com.example.loki.winners.northwindapi.entity.Product;
-import com.example.loki.winners.northwindapi.entity.Supplier;
+import com.example.loki.winners.northwindapi.model.entity.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

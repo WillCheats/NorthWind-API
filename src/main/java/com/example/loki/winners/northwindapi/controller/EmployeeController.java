@@ -1,8 +1,8 @@
 package com.example.loki.winners.northwindapi.controller;
 
-import com.example.loki.winners.northwindapi.entity.Employee;
+import com.example.loki.winners.northwindapi.model.entity.Employee;
 import com.example.loki.winners.northwindapi.exception.EntityNotFoundException;
-import com.example.loki.winners.northwindapi.repository.EmployeeRepository;
+import com.example.loki.winners.northwindapi.model.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

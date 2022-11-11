@@ -1,8 +1,8 @@
 package com.example.loki.winners.northwindapi.controller;
 
-import com.example.loki.winners.northwindapi.entity.Category;
+import com.example.loki.winners.northwindapi.model.entity.Category;
 import com.example.loki.winners.northwindapi.exception.EntityNotFoundException;
-import com.example.loki.winners.northwindapi.repository.CategoryRepository;
+import com.example.loki.winners.northwindapi.model.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.GetMapping;

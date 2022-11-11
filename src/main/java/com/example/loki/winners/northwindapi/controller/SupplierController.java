@@ -1,7 +1,7 @@
 package com.example.loki.winners.northwindapi.controller;
 
-import com.example.loki.winners.northwindapi.entity.Supplier;
-import com.example.loki.winners.northwindapi.repository.SupplierRepository;
+import com.example.loki.winners.northwindapi.model.entity.Supplier;
+import com.example.loki.winners.northwindapi.model.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;

@@ -1,17 +1,17 @@
 package com.example.loki.winners.northwindapi.controller;
 
-import com.example.loki.winners.northwindapi.entity.Employee;
-import com.example.loki.winners.northwindapi.entity.Employeeterritory;
-import com.example.loki.winners.northwindapi.entity.Region;
+import com.example.loki.winners.northwindapi.model.entity.Employee;
+import com.example.loki.winners.northwindapi.model.entity.Employeeterritory;
+import com.example.loki.winners.northwindapi.model.entity.Region;
 import com.example.loki.winners.northwindapi.exception.EntityNotFoundException;
-import com.example.loki.winners.northwindapi.repository.EmployeeterritoryRepository;
-import com.example.loki.winners.northwindapi.repository.TerritoryRepository;
+import com.example.loki.winners.northwindapi.model.repository.EmployeeterritoryRepository;
+import com.example.loki.winners.northwindapi.model.repository.TerritoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.loki.winners.northwindapi.entity.Territory;
+import com.example.loki.winners.northwindapi.model.entity.Territory;
 
 import java.util.*;
 
