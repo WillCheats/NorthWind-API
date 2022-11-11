@@ -1,11 +1,13 @@
 package com.example.loki.winners.northwindapi.entity;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product extends RepresentationModel<Product> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ProductID", nullable = false)
@@ -31,6 +33,30 @@ public class Product {
 
     @Column(name = "Discontinued", nullable = false)
     private Boolean discontinued = false;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SupplierID")
+    private Supplier supplierID;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CategoryID")
+    private Category categoryID;
+
+    public Category getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(Category categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public Supplier getSupplierID() {
+        return supplierID;
+    }
+
+    public void setSupplierID(Supplier supplierID) {
+        this.supplierID = supplierID;
+    }
 
     public Integer getId() {
         return id;
