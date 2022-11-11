@@ -9,16 +9,16 @@ import java.util.List;
 public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
 
     // Basic Getters
-    public List<Supplier> getAllByCompanyName  (String CompanyName);
-    public List<Supplier> getAllByContactName  (String ContactName);
-    public List<Supplier> getAllByContactTitle (String ContactTitle);
-    public List<Supplier> getAllByAddress      (String Address);
-    public List<Supplier> getAllByCity         (String City);
-    public List<Supplier> getAllByRegion       (String Region);
-    public List<Supplier> getAllByPostalCode   (String postalCode);
-    public List<Supplier> getAllByCountry      (String country);
-    public List<Supplier> getAllByPhone        (String Phone);
-    public List<Supplier> getAllByFax          (String Fax);
+    List<Supplier> getAllByCompanyName  (String CompanyName);
+    List<Supplier> getAllByContactName  (String ContactName);
+    List<Supplier> getAllByContactTitle (String ContactTitle);
+    List<Supplier> getAllByAddress      (String Address);
+    List<Supplier> getAllByCity         (String City);
+    List<Supplier> getAllByRegion       (String Region);
+    List<Supplier> getAllByPostalCode   (String postalCode);
+    List<Supplier> getAllByCountry      (String country);
+    List<Supplier> getAllByPhone        (String Phone);
+    List<Supplier> getAllByFax          (String Fax);
 
-    public boolean existsById (int id);
+    boolean existsById (int id);
 }

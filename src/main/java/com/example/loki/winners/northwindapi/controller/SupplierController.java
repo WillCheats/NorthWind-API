@@ -1,7 +1,6 @@
 package com.example.loki.winners.northwindapi.controller;
 
 import com.example.loki.winners.northwindapi.entity.Supplier;
-import com.example.loki.winners.northwindapi.exception.CustomerNotFoundException;
 import com.example.loki.winners.northwindapi.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -16,11 +15,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 public class SupplierController {
 
+    public static SupplierController controller;
     private SupplierRepository repository;
 
     @Autowired
     public SupplierController(SupplierRepository repository) {
         this.repository = repository;
+        controller = WebMvcLinkBuilder.methodOn(this.getClass());
     }
 
     @GetMapping("/supplier/all")
@@ -30,13 +31,11 @@ public class SupplierController {
     }
 
     @GetMapping("/supplier/{id}")
-    public EntityModel<Supplier> getBySupplierByID(@PathVariable int id) {
-
-        int finalId = id;
+    public EntityModel<Supplier> getSupplierById(@PathVariable int id) {
         Supplier supplier = repository.findById(id).get();
         EntityModel<Supplier> entityModel = EntityModel.of(supplier);
-        WebMvcLinkBuilder prev = WebMvcLinkBuilder.linkTo(methodOn(this.getClass()).getBySupplierByID(id - 1));
-        WebMvcLinkBuilder next = WebMvcLinkBuilder.linkTo(methodOn(this.getClass()).getBySupplierByID(id + 1));
+        WebMvcLinkBuilder prev = WebMvcLinkBuilder.linkTo(methodOn(this.getClass()).getSupplierById(id - 1));
+        WebMvcLinkBuilder next = WebMvcLinkBuilder.linkTo(methodOn(this.getClass()).getSupplierById(id + 1));
         WebMvcLinkBuilder all = WebMvcLinkBuilder.linkTo(methodOn(this.getClass()).getAllSupplier());
         entityModel.add(prev.withRel("previous-supplier"));
         entityModel.add(next.withRel("next-supplier"));
