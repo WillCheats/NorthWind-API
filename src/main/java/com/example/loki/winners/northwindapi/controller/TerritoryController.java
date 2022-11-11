@@ -4,14 +4,10 @@ import com.example.loki.winners.northwindapi.entity.Employee;
 import com.example.loki.winners.northwindapi.entity.Employeeterritory;
 import com.example.loki.winners.northwindapi.entity.Region;
 import com.example.loki.winners.northwindapi.exception.EntityNotFoundException;
-import com.example.loki.winners.northwindapi.repository.EmployeeRepository;
 import com.example.loki.winners.northwindapi.repository.EmployeeterritoryRepository;
 import com.example.loki.winners.northwindapi.repository.TerritoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,13 +52,6 @@ public class TerritoryController {
         return territoryMaps;
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> catchTerritoryNotFoundException(EntityNotFoundException ex) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(ex.toMap());
-    }
-
     private Link getRegionLink(Territory territory) {
         Region region = territory.getRegionID();
         return linkTo(methodOn(RegionController.class)
@@ -92,8 +81,6 @@ public class TerritoryController {
         map.put("employees", employeeMap);
         return map;
     }
-
-
 }
 
 
