@@ -2,6 +2,7 @@ package com.example.loki.winners.northwindapi.controller;
 
 import com.example.loki.winners.northwindapi.entity.Employee;
 import com.example.loki.winners.northwindapi.entity.Employeeterritory;
+import com.example.loki.winners.northwindapi.entity.Region;
 import com.example.loki.winners.northwindapi.exception.EntityNotFoundException;
 import com.example.loki.winners.northwindapi.repository.EmployeeRepository;
 import com.example.loki.winners.northwindapi.repository.EmployeeterritoryRepository;
@@ -24,9 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 public class TerritoryController {
     private TerritoryRepository territoryRepository;
-
     private EmployeeterritoryRepository employeeterritoryRepository;
-    private EmployeeRepository employeeRepository;
 
     @Autowired
     public TerritoryController(TerritoryRepository territoryRepository, EmployeeterritoryRepository employeeterritoryRepository) {
@@ -38,9 +37,7 @@ public class TerritoryController {
     public Map<String, Object> getTerritoryByID(@PathVariable String id) {
         Territory territory = territoryRepository.findById(id).orElseThrow(()
                 -> new EntityNotFoundException(404, "Could not find territory with id " + id + "."));
-        return getTerritoryMap(territory,
-                getEmployeeMap(employeeterritoryRepository.findAll(), territory)
-        );
+        return getTerritoryMap(territory, getRegionLink(territory), getEmployeeMap(territory));
     }
 
     @GetMapping("/territory/all")
@@ -51,8 +48,9 @@ public class TerritoryController {
         List<Employeeterritory> employeeterritoryRepositoryList = employeeterritoryRepository.findAll();
 
         for (Territory territory : territoryList) {
-            Map<String, Link> employeeMap = getEmployeeMap(employeeterritoryRepositoryList, territory);
-            territoryMaps.add(getTerritoryMap(territory, employeeMap));
+            Map<String, Link> employeeMap = getEmployeeMap(territory);
+            Link region = getRegionLink(territory);
+            territoryMaps.add(getTerritoryMap(territory, region, employeeMap));
         }
 
         return territoryMaps;
@@ -65,24 +63,32 @@ public class TerritoryController {
                 .body(ex.toMap());
     }
 
-    private static Map<String, Link> getEmployeeMap(List<Employeeterritory> employeeterritoryRepositoryList, Territory territory) {
+    private Link getRegionLink(Territory territory) {
+        Region region = territory.getRegionID();
+        return linkTo(methodOn(RegionController.class)
+                .getRegionById(region.getId()))
+                .withRel("region " + region.getId());
+    }
+
+    private Map<String, Link> getEmployeeMap(Territory territory) {
         Map<String, Link> employeeMap = new HashMap<>();
-        for (Employeeterritory employeeterritory : employeeterritoryRepositoryList) {
-            if (employeeterritory.getTerritoryID().equals(territory)) {
-                Employee employee = employeeterritory.getEmployeeID();
-                Link link = linkTo(methodOn(EmployeeController.class)
-                        .getEmployeeById(employee.getId()))
-                        .withRel("employee " + employee.getId());
-                employeeMap.put(employee.getFirstName() + " " + employee.getLastName(), link);
-            }
+        List<Employeeterritory> employeeterritories
+                = employeeterritoryRepository.getEmployeeterritoriesByTerritoryID(territory);
+        for (Employeeterritory employeeterritory : employeeterritories) {
+            Employee employee = employeeterritory.getEmployeeID();
+            Link link = linkTo(methodOn(EmployeeController.class)
+                    .getEmployeeById(employee.getId()))
+                    .withRel("employee " + employee.getId());
+            employeeMap.put(employee.getFirstName() + " " + employee.getLastName(), link);
         }
         return employeeMap;
     }
 
-    private Map<String, Object> getTerritoryMap(Territory territory, Map<String, Link> employeeMap) {
+    private Map<String, Object> getTerritoryMap(Territory territory, Link region, Map<String, Link> employeeMap) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", territory.getId());
         map.put("description", territory.getTerritoryDescription());
+        map.put("region", region);
         map.put("employees", employeeMap);
         return map;
     }
