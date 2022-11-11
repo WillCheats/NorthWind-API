@@ -1,4 +1,4 @@
-package com.example.loki.winners.northwindapi;
+package com.example.loki.winners.northwindapi.controller.model;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
